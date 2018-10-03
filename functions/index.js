@@ -4,6 +4,7 @@ const express = require('express');
 
 // Routes
 const routesApi = require('./src/routes/api/courses');
+const routesNotesApi = require('./src/routes/api/notes');
 
 // Authorization
 const admin = require("firebase-admin");
@@ -13,10 +14,8 @@ admin.initializeApp({
   databaseURL: "https://to-do-app-api.firebaseio.com"
 });
 
-
 const app = express();
 app.use(express.json());
-
 
 // Routes
 app.get('/home', (req, res) => {
@@ -24,11 +23,9 @@ app.get('/home', (req, res) => {
   res.send('Hello World');
 });
 app.use('/api', routesApi);
+app.use('/api', routesNotesApi);
 
 // App listen or serve
 app.listen(3000, () => console.log('Listening on port 3000'));
-
-
-
 
 exports.app = functions.https.onRequest(app);
