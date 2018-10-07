@@ -5,7 +5,8 @@ module.exports = {
     const ref = admin.database().ref('notes');
     ref.on('value', (snapshot) => {
       const notes = snapshot.val();
-      return res.send(notes);
+      const notesArray = Object.keys(notes).map(i => notes[i])
+      return res.json(notesArray);
     });
   },
 
@@ -28,7 +29,12 @@ module.exports = {
 
     const ref = admin.database().ref('notes');
     ref.push(note);
-    return res.send(note);
+    
+    const response = {
+      message: 'created',
+      status: '201'
+    }
+    return res.json(response);
   },
 
   // upsert: (req, res) => {
